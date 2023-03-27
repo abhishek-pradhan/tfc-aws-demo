@@ -23,5 +23,5 @@ terraform {
 # Configure the AWS Provider
 # AWS access key credentials are stored as environment variables, to avoid hardcoding here or leaking it on github
 provider "aws" {
-  region = var.aws-region
+  region = var.aws_region
 }

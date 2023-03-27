@@ -6,7 +6,7 @@ module "kms" {
   key_usage   = "ENCRYPT_DECRYPT"
 
   # An alias is a friendly name for a AWS KMS key
-  aliases = var.kms-aliases
+  aliases = var.kms_aliases
 
   tags = {
     Terraform   = "true"
@@ -17,7 +17,7 @@ module "kms" {
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = var.s3-bucket-name
+  bucket = var.s3_bucket_name
   acl    = "private"
 
   tags = {
