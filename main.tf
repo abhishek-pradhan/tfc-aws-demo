@@ -2,11 +2,11 @@ module "kms" {
   source  = "terraform-aws-modules/kms/aws"
   version = "1.5.0"
 
-  description = "EC2 AutoScaling key usage"
+  description = "kms key created by terraform"
   key_usage   = "ENCRYPT_DECRYPT"
 
-  # Aliases
-  aliases = ["demo/s3"]
+  # An alias is a friendly name for a AWS KMS key
+  aliases = var.kms-aliases
 
   tags = {
     Terraform   = "true"
@@ -17,7 +17,7 @@ module "kms" {
 module "s3_bucket" {
   source = "terraform-aws-modules/s3-bucket/aws"
 
-  bucket = "tfc-aws-demo-abhi"
+  bucket = var.s3-bucket-name
   acl    = "private"
 
   tags = {
@@ -29,24 +29,25 @@ module "s3_bucket" {
 resource "aws_resourcegroups_group" "test" {
   name = "rg-tfc-aws-demo"
 
+  # remember to get below JSON from AWS resource group page! 
   resource_query {
     query = <<JSON
-{
-  "ResourceTypeFilters": [
-    "AWS::AllSupported"
-  ],
-  "TagFilters": [
-    {
-      "Key": "Environment",
-      "Values": ["dev"]
-    },
-    {
-      "Key": "Terraform",
-      "Values": ["true"]
-    }    
-  ]
-}
-JSON
+      {
+        "ResourceTypeFilters": [
+          "AWS::AllSupported"
+        ],
+        "TagFilters": [
+          {
+            "Key": "Environment",
+            "Values": ["dev"]
+          },
+          {
+            "Key": "Terraform",
+            "Values": ["true"]
+          }    
+        ]
+      }
+      JSON
   }
 }
 
