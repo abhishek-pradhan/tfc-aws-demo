@@ -6,6 +6,6 @@ output "my-kms" {
   value = module.kms
 }
 
-output "ab_cdn_bucket" {
-  value = data.aws_s3_bucket.ab_cdn_bucket
+output "demo-data-bucket" {
+  value = data.aws_s3_bucket.demo_data_bucket
 }

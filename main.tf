@@ -59,7 +59,10 @@ resource "aws_resourcegroups_group" "test" {
 }
 
 # please ensure below bucket is already present in your AWS account, for data to work!
-# if it's not present, create a new bucket with some unique name
-data "aws_s3_bucket" "ab_cdn_bucket" {
-  bucket = "cdn.blog.abhishekpradhan.com"
+# # if it's not present, create a new bucket with some unique name
+# Create s3 bucket: $ aws s3api create-bucket --bucket tfc-aws-demo-891223 --create-bucket-configuration LocationConstraint=ap-south-1
+# Tag s3 bucket: $ aws s3api put-bucket-tagging --bucket tfc-aws-demo-891223 --tagging "TagSet=[{Key=Terraform, Value=true}, {Key=Environment, Value=dev}]"
+# Delete s3 bucket: $ aws s3api delete-bucket --bucket tfc-aws-demo-891223
+data "aws_s3_bucket" "demo_data_bucket" {
+  bucket = "${var.project_prefix}-891223"
 }
