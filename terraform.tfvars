@@ -1,5 +1,5 @@
-aws-region = "ap-south-1"
+aws_region = "ap-south-1"
 
-s3-bucket-name = "tfc-aws-demo-abhi"
+s3_bucket_name = "tfc-aws-demo-abhi"
 
-kms-aliases = ["abhi/tfc-aws-demo"]
+kms_aliases = ["abhi/tfc-aws-demo"]
