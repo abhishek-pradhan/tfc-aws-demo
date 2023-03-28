@@ -57,3 +57,9 @@ resource "aws_resourcegroups_group" "test" {
       JSON
   }
 }
+
+# please ensure below bucket is already present in your AWS account, for data to work!
+# if it's not present, create a new bucket with some unique name
+data "aws_s3_bucket" "ab_cdn_bucket" {
+  bucket = "cdn.blog.abhishekpradhan.com"
+}
