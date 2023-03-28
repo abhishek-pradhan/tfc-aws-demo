@@ -1,3 +1,9 @@
+# local variables to avoid hardcoding within this file
+locals {
+  tags_terraform = "true"
+  tags_env       = "dev"
+}
+
 module "kms" {
   source  = "terraform-aws-modules/kms/aws"
   version = "1.5.0"
@@ -9,8 +15,8 @@ module "kms" {
   aliases = var.kms_aliases
 
   tags = {
-    Terraform   = "true"
-    Environment = "dev"
+    Terraform   = local.tags_terraform
+    Environment = local.tags_env
   }
 }
 
@@ -21,13 +27,14 @@ module "s3_bucket" {
   acl    = "private"
 
   tags = {
-    Terraform   = "true"
-    Environment = "dev"
+    Terraform   = local.tags_terraform
+    Environment = local.tags_env
   }
 }
 
 resource "aws_resourcegroups_group" "test" {
-  name = "rg-tfc-aws-demo"
+  name        = "rg-${var.project_prefix}"
+  description = "Terraform demo project: ${var.project_prefix}"
 
   # remember to get below JSON from AWS resource group page! 
   resource_query {
@@ -39,15 +46,14 @@ resource "aws_resourcegroups_group" "test" {
         "TagFilters": [
           {
             "Key": "Environment",
-            "Values": ["dev"]
+            "Values": ["${local.tags_env}"]
           },
           {
             "Key": "Terraform",
-            "Values": ["true"]
+            "Values": ["${local.tags_terraform}"]
           }    
         ]
       }
       JSON
   }
 }
-
