@@ -34,7 +34,7 @@ module "s3_bucket" {
 
 resource "aws_resourcegroups_group" "test" {
   name        = "rg-${var.project_prefix}"
-  description = "Terraform demo project: ${var.project_prefix}"
+  description = "Terraform demo project- ${var.project_prefix}"
 
   # remember to get below JSON from AWS resource group page! 
   resource_query {
