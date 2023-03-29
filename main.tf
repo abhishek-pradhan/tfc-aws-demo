@@ -4,6 +4,14 @@ locals {
   tags_env       = "dev"
 }
 
+locals {
+  # Common tags to be assigned to all resources
+  common_tags = {
+    Terraform   = local.tags_terraform
+    Environment = local.tags_env
+  }
+}
+
 module "kms" {
   source  = "terraform-aws-modules/kms/aws"
   version = "1.5.0"
@@ -14,10 +22,7 @@ module "kms" {
   # An alias is a friendly name for a AWS KMS key
   aliases = var.kms_aliases
 
-  tags = {
-    Terraform   = local.tags_terraform
-    Environment = local.tags_env
-  }
+  tags = local.common_tags
 }
 
 module "s3_bucket" {
@@ -26,10 +31,7 @@ module "s3_bucket" {
   bucket = var.s3_bucket_name
   acl    = "private"
 
-  tags = {
-    Terraform   = local.tags_terraform
-    Environment = local.tags_env
-  }
+  tags = local.common_tags
 }
 
 resource "aws_resourcegroups_group" "test" {
